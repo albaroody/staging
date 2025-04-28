@@ -1,16 +1,16 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "albaroody/staging",
+    "description": "Allow any Laravel model to be saved as a draft (staged) into a separate system without affecting real database tables.",
     "keywords": [
-        ":vendor_name",
+        "albaroody",
         "laravel",
-        ":package_slug"
+        "staging"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/albaroody/staging",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
+            "name": "albaroody",
             "email": "author@domain.com",
             "role": "Developer"
         }
@@ -35,13 +35,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Albaroody\\Staging\\": "src/",
+            "Albaroody\\Staging\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/",
+            "Albaroody\\Staging\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -63,10 +63,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Albaroody\\Staging\\StagingServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "Staging": "Albaroody\\Staging\\Facades\\Staging"
             }
         }
     },

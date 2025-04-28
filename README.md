@@ -1,48 +1,71 @@
 # :package_description
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/:vendor_slug/:package_slug/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/:vendor_slug/:package_slug/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/Albaroody/staging.svg?style=flat-square)](https://packagist.org/packages/Albaroody/staging)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/Albaroody/staging/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/Albaroody/staging/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/Albaroody/staging/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/Albaroody/staging/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/Albaroody/staging.svg?style=flat-square)](https://packagist.org/packages/Albaroody/staging)
 <!--delete-->
+
+# Laravel Staging
+
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/albaroody/staging.svg?style=flat-square)](https://packagist.org/packages/albaroody/staging)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/albaroody/staging/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/albaroody/staging/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/albaroody/staging/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/albaroody/staging/actions?query=workflow%3AFix+PHP+code+style+issues+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/albaroody/staging.svg?style=flat-square)](https://packagist.org/packages/albaroody/staging)
+
 ---
-This repo can be used to scaffold a Laravel package. Follow these steps to get started:
 
-1. Press the "Use this template" button at the top of this repo to create a new repo with the contents of this skeleton.
-2. Run "php ./configure.php" to run a script that will replace all placeholders throughout all the files.
-3. Have fun creating your package.
-4. If you need help creating a package, consider picking up our <a href="https://laravelpackage.training">Laravel Package Training</a> video course.
+Laravel Staging allows you to **stage (draft)** Eloquent models and their **nested relationships** into a clean, separate system before committing them permanently to your main database.
+
+- Stage parent models like `Patient`, `Post`, `Order`, etc.
+- Stage related models like `Sales`, `Items`, `Comments`, etc.
+- Hydrate full Eloquent models from staged data (not just arrays)
+- Promote staged data to production tables cleanly
+- Keep your main database structure untouched — no intrusive columns added!
+
+Perfect for multi-step forms, draft publishing systems, and modular deferred saving workflows.
+
 ---
-<!--/delete-->
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
-## Support us
+## Installation
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/:package_name.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/:package_name)
+You can install the package via Composer:
 
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
+```bash
+composer require albaroody/staging
 
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+You can publish and run the staging migration with:
+
+```bash
+php artisan vendor:publish --tag="staging-migrations"
+php artisan migrate
+
+You can publish the config file with:
+```bash
+php artisan vendor:publish --tag="staging-config"
+
+Usage
+
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require :vendor_slug/:package_slug
+composer require Albaroody/staging
 ```
 
 You can publish and run the migrations with:
 
 ```bash
-php artisan vendor:publish --tag=":package_slug-migrations"
+php artisan vendor:publish --tag="staging-migrations"
 php artisan migrate
 ```
 
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag=":package_slug-config"
+php artisan vendor:publish --tag="staging-config"
 ```
 
 This is the contents of the published config file:
@@ -55,14 +78,37 @@ return [
 Optionally, you can publish the views using
 
 ```bash
-php artisan vendor:publish --tag=":package_slug-views"
+php artisan vendor:publish --tag="staging-views"
 ```
 
 ## Usage
-
+1. Add the Stagable trait to your model:
 ```php
-$variable = new VendorName\Skeleton();
-echo $variable->echoPhrase('Hello, VendorName!');
+use Albaroody\\Staging\\Traits\\Stagable;
+
+class Patient extends Model
+{
+    use Stagable;
+}
+```
+2. Stage a model:
+```php
+$patient = new Patient([
+    'name' => 'John Doe',
+]);
+
+$patient->stage();
+```
+3. Load a staged model:
+```php
+$stagedPatient = Patient::findStaged($stagingId);
+
+// Now you can use it like a normal model
+echo $stagedPatient->name;
+```
+4. Promote a staged model to the database:
+```php
+$realPatient = $stagedPatient->promoteFromStaging();
 ```
 
 ## Testing
@@ -85,7 +131,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
+- [Albaroody](https://github.com/Albaroody)
 - [All Contributors](../../contributors)
 
 ## License
