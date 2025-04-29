@@ -20,5 +20,6 @@ class StagingEntry extends Model
     ];
 
     public $incrementing = false; // because id is UUID
+
     protected $keyType = 'string';
 }

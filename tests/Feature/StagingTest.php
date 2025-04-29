@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class DummyPatient extends Model
 {
     protected $fillable = ['name', 'email'];
+
     public $timestamps = false; // keep it simple
+
     protected $table = 'patients'; // simulate real table name
 }
 

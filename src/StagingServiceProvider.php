@@ -13,6 +13,6 @@ class StagingServiceProvider extends PackageServiceProvider
             ->name('staging') // This will prefix config, views, etc.
             ->hasConfigFile() // Looks for config/staging.php
             ->hasMigration('create_staging_entries_table');
-           
+
     }
 }

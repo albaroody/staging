@@ -31,7 +31,7 @@ class StagingManager
         $modelClass = $stagingEntry->model;
         $data = $stagingEntry->data;
 
-        $model = (new $modelClass())->newInstance($data, [], true);
+        $model = (new $modelClass)->newInstance($data, [], true);
         $model->staging_id = $stagingEntry->id;
 
         return $model;
