@@ -1,10 +1,3 @@
-# :package_description
-
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/Albaroody/staging.svg?style=flat-square)](https://packagist.org/packages/Albaroody/staging)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/Albaroody/staging/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/Albaroody/staging/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/Albaroody/staging/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/Albaroody/staging/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/Albaroody/staging.svg?style=flat-square)](https://packagist.org/packages/Albaroody/staging)
-<!--delete-->
 
 # Laravel Staging
 
@@ -33,52 +26,15 @@ You can install the package via Composer:
 
 ```bash
 composer require albaroody/staging
-
-You can publish and run the staging migration with:
-
-```bash
-php artisan vendor:publish --tag="staging-migrations"
-php artisan migrate
-
-You can publish the config file with:
-```bash
-php artisan vendor:publish --tag="staging-config"
-
-Usage
-
-
-## Installation
-
-You can install the package via composer:
-
-```bash
-composer require Albaroody/staging
 ```
-
-You can publish and run the migrations with:
-
+You can publish and run the staging migration with
 ```bash
 php artisan vendor:publish --tag="staging-migrations"
 php artisan migrate
 ```
-
 You can publish the config file with:
-
 ```bash
 php artisan vendor:publish --tag="staging-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="staging-views"
 ```
 
 ## Usage
@@ -110,7 +66,7 @@ echo $stagedPatient->name;
 ```php
 $realPatient = $stagedPatient->promoteFromStaging();
 ```
-
+Enjoy easy staging without cluttering your main table with extra columns
 ## Testing
 
 ```bash
