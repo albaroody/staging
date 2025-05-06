@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Kalnoy\Nestedset\NestedSet;
 return new class() extends Migration {
     public function up(): void
     {
@@ -11,8 +11,10 @@ return new class() extends Migration {
             $table->uuid('id')->primary();
             $table->string('model');
             $table->integer('model_id')->nullable();
-            $table->uuid('parent_staging_id')->nullable();
             $table->json('data');
+            $table->unsignedInteger('_lft')->nullable();
+            $table->unsignedInteger('_rgt')->nullable();
+            $table->string('parent_id')->nullable();
             $table->timestamps();
             $table->timestamp('expires_at')->nullable();
         });
