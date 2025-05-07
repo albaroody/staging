@@ -1,15 +1,14 @@
 <?php
 
+use Albaroody\Staging\Http\Controllers\Controller;
 use Albaroody\Staging\Models\StagingEntry;
 use Albaroody\Staging\Services\StagingManager;
 use Illuminate\Database\Eloquent\Model;
-use \Illuminate\Support\Facades\Schema;
-use Albaroody\Staging\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class DummyPatient extends Model
 {
-
     protected $fillable = ['name', 'email'];
 
     public $timestamps = false; // keep it simple
@@ -67,7 +66,6 @@ it('can stage, load and promote a model', function () {
 });
 
 it('can stage a patient via the stage route', function () {
-    
 
     // Step 2: Define the route using the macro
     Route::resourceWithStage('patients', DummyPatientController::class);
