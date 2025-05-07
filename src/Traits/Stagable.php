@@ -14,6 +14,7 @@ trait Stagable
     public static function stageNew(array $attributes, $parentStagingId = null)
     {
         $model = new static($attributes);
+
         return StagingManager::stage($model, $parentStagingId);
     }
 
