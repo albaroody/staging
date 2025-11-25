@@ -10,11 +10,16 @@ return new class() extends Migration {
         Schema::create('staging_entries', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('model');
-            $table->integer('model_id')->nullable();
+            $table->integer('model_id')->nullable(); // Reserved for future use
             $table->uuid('parent_staging_id')->nullable();
+            $table->string('parent_model')->nullable();
+            $table->string('relationship_type')->nullable();
+            $table->integer('sort_order')->default(0);
             $table->json('data');
             $table->timestamps();
-            $table->timestamp('expires_at')->nullable();
+            $table->timestamp('expires_at')->nullable(); // Reserved for future use
+            
+            $table->index(['parent_staging_id', 'parent_model']);
         });
     }
 
