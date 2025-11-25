@@ -17,7 +17,7 @@ trait Stagable
             $relationships = static::getHasManyRelationships();
 
             foreach ($relationships as $relationshipName => $config) {
-                $tempIdsKey = $relationshipName . '_staging_ids';
+                $tempIdsKey = $relationshipName.'_staging_ids';
                 $stagingIdKey = '_staging_id';
 
                 // Check if we have staged children IDs in the model attributes or request
@@ -56,8 +56,6 @@ trait Stagable
     /**
      * Define hasMany relationships that support staging
      * Override in model to define relationships
-     *
-     * @return array
      */
     protected static function getHasManyRelationships(): array
     {
@@ -97,10 +95,10 @@ trait Stagable
     /**
      * Stage multiple new objects at once
      *
-     * @param array $items Array of data arrays, one per object to stage
-     * @param string|null $parentStagingId Optional parent staging ID
-     * @param string|null $parentModel Optional parent model class
-     * @param string|null $relationshipType Optional relationship type
+     * @param  array  $items  Array of data arrays, one per object to stage
+     * @param  string|null  $parentStagingId  Optional parent staging ID
+     * @param  string|null  $parentModel  Optional parent model class
+     * @param  string|null  $relationshipType  Optional relationship type
      * @return array Array of staging IDs
      */
     public static function stageMany(
@@ -112,6 +110,7 @@ trait Stagable
         // Add model class to each item for StagingManager::stageMany
         $itemsWithModel = array_map(function ($item) {
             $item['_model_class'] = static::class;
+
             return $item;
         }, $items);
 
@@ -121,10 +120,9 @@ trait Stagable
     /**
      * Link staged children to a staged parent
      *
-     * @param array|string $childStagingIds Single staging ID or array of staging IDs
-     * @param string $parentStagingId The parent's staging ID
-     * @param string $parentModel The parent model class
-     * @return void
+     * @param  array|string  $childStagingIds  Single staging ID or array of staging IDs
+     * @param  string  $parentStagingId  The parent's staging ID
+     * @param  string  $parentModel  The parent model class
      */
     public static function linkStagedToParent($childStagingIds, string $parentStagingId, string $parentModel): void
     {
@@ -134,8 +132,8 @@ trait Stagable
     /**
      * Find all staged children for a given parent
      *
-     * @param string $parentStagingId The parent's staging ID
-     * @param string $parentModel The parent model class
+     * @param  string  $parentStagingId  The parent's staging ID
+     * @param  string  $parentModel  The parent model class
      * @return Collection Collection of staged data
      */
     public static function findStagedChildren(string $parentStagingId, string $parentModel): Collection
@@ -146,10 +144,10 @@ trait Stagable
     /**
      * Save all staged children when parent is saved
      *
-     * @param int $parentId The saved parent's ID
-     * @param string $parentStagingId The parent's staging ID (before saving)
-     * @param string $parentModel The parent model class
-     * @param string $foreignKey The foreign key column name in child table
+     * @param  int  $parentId  The saved parent's ID
+     * @param  string  $parentStagingId  The parent's staging ID (before saving)
+     * @param  string  $parentModel  The parent model class
+     * @param  string  $foreignKey  The foreign key column name in child table
      * @return array Array of created child IDs
      */
     public static function saveStagedChildren(
@@ -171,7 +169,7 @@ trait Stagable
      * Get a collection of staged objects as if they were Eloquent models
      * Useful for displaying in forms/tables before saving
      *
-     * @param array $stagingIds Array of staging IDs
+     * @param  array  $stagingIds  Array of staging IDs
      * @return Collection Collection of model-like objects
      */
     public static function getStagedCollection(array $stagingIds): Collection

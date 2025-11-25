@@ -70,10 +70,10 @@ class StagingManager
     /**
      * Stage multiple new objects at once
      *
-     * @param array $items Array of data arrays, one per object to stage
-     * @param string|null $parentStagingId Optional parent staging ID
-     * @param string|null $parentModel Optional parent model class
-     * @param string|null $relationshipType Optional relationship type
+     * @param  array  $items  Array of data arrays, one per object to stage
+     * @param  string|null  $parentStagingId  Optional parent staging ID
+     * @param  string|null  $parentModel  Optional parent model class
+     * @param  string|null  $relationshipType  Optional relationship type
      * @return array Array of staging IDs
      */
     public static function stageMany(
@@ -87,7 +87,7 @@ class StagingManager
         foreach ($items as $index => $itemData) {
             // Extract model class and remove from data
             $modelClass = $itemData['_model_class'] ?? null;
-            if (!$modelClass) {
+            if (! $modelClass) {
                 throw new \InvalidArgumentException('Model class must be provided in _model_class key');
             }
             unset($itemData['_model_class']);
@@ -110,10 +110,9 @@ class StagingManager
     /**
      * Link staged children to a staged parent
      *
-     * @param array|string $childStagingIds Single staging ID or array of staging IDs
-     * @param string $parentStagingId The parent's staging ID
-     * @param string $parentModel The parent model class
-     * @return void
+     * @param  array|string  $childStagingIds  Single staging ID or array of staging IDs
+     * @param  string  $parentStagingId  The parent's staging ID
+     * @param  string  $parentModel  The parent model class
      */
     public static function linkStagedToParent($childStagingIds, string $parentStagingId, string $parentModel): void
     {
@@ -130,8 +129,8 @@ class StagingManager
     /**
      * Find all staged children for a given parent
      *
-     * @param string $parentStagingId The parent's staging ID
-     * @param string $parentModel The parent model class
+     * @param  string  $parentStagingId  The parent's staging ID
+     * @param  string  $parentModel  The parent model class
      * @return Collection Collection of staged data
      */
     public static function findStagedChildren(string $parentStagingId, string $parentModel): Collection
@@ -154,11 +153,11 @@ class StagingManager
     /**
      * Save all staged children when parent is saved
      *
-     * @param string $childModelClass The child model class
-     * @param int $parentId The saved parent's ID
-     * @param string $parentStagingId The parent's staging ID (before saving)
-     * @param string $parentModel The parent model class
-     * @param string $foreignKey The foreign key column name in child table
+     * @param  string  $childModelClass  The child model class
+     * @param  int  $parentId  The saved parent's ID
+     * @param  string  $parentStagingId  The parent's staging ID (before saving)
+     * @param  string  $parentModel  The parent model class
+     * @param  string  $foreignKey  The foreign key column name in child table
      * @return array Array of created child IDs
      */
     public static function saveStagedChildren(
@@ -189,8 +188,8 @@ class StagingManager
      * Get a collection of staged objects as if they were Eloquent models
      * Useful for displaying in forms/tables before saving
      *
-     * @param array $stagingIds Array of staging IDs
-     * @param string $modelClass The model class
+     * @param  array  $stagingIds  Array of staging IDs
+     * @param  string  $modelClass  The model class
      * @return Collection Collection of model-like objects
      */
     public static function getStagedCollection(array $stagingIds, string $modelClass): Collection
@@ -204,6 +203,7 @@ class StagingManager
                 $data['staging_id'] = $entry->id;
                 $data['temp_id'] = $entry->id; // Alias for compatibility
                 $data['is_staged'] = true;
+
                 return (object) $data; // Return as object to mimic Eloquent model
             });
     }
